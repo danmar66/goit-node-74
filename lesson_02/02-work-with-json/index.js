@@ -3,41 +3,51 @@ const books = require('./books')
 const invokeAction = async ({ action, id, title, author }) => {
   switch (action) {
     case 'getAll':
-      const allBooks = await books.getAll()
-      console.log(allBooks)
+      const all = await books.getAll()
+      console.log(all)
       break
-    case 'getOneById':
-      const oneBook = await books.getOneById(id)
+
+    case 'getById':
+      const oneBook = await books.getById(id)
       console.log(oneBook)
       break
+
     case 'add':
       const newBook = await books.add({ title, author })
       console.log(newBook)
       break
+
     case 'updateById':
-      const updateBook = await books.updateById(id, { title, author })
-      console.log(updateBook)
+      const updatedBook = await books.updateById(id, { title, author })
+      console.log(updatedBook)
       break
+
     case 'removeById':
-      const removeBook = await books.removeById(id)
-      console.log(removeBook)
+      const removedBook = await books.removeById(id)
+      console.log(removedBook)
       break
 
     default:
+      console.log('Unknown action')
       break
   }
 }
 
 // invokeAction({ action: 'getAll' })
-// invokeAction({ action: 'getOneById', id: 'u9kgwNWGi3uUUwh0b8V491' })
-// invokeAction({ action: 'add', author: 'George Orwell', title: '1984' })
+// invokeAction({ action: 'getById', id: 'u9kgwNWGi3uUUwh0b8V49+' })
+// invokeAction({ action: 'add', title: '1984', author: 'George Orwell' })
 // invokeAction({
 //   action: 'updateById',
-//   id: 'vQU9rne2LhLGBM5F4lmvi',
+//   id: 'czlDWYlBU7Tb9kyxGAy4E1',
+//   title: '1980',
 //   author: 'George Orwell',
-//   title: '1984',
 // })
-// invokeAction({
-//   action: 'removeById',
-//   id: 'vQU9rne2LhLGBM5F4lmvi',
-// })
+// invokeAction({ action: 'removeById', id: 'czlDWYlBU7Tb9kyxGAy4E' })
+
+/// ---
+
+const actionIndex = process.argv.indexOf('--action')
+if (actionIndex !== -1) {
+  const action = process.argv[actionIndex + 1]
+  invokeAction({ action })
+}

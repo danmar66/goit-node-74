@@ -4,11 +4,12 @@ const { nanoid } = require('nanoid')
 
 const booksPath = path.join(__dirname, 'books.json')
 
-const updateBooks = async (books) =>
-  fs.writeFile(booksPath, JSON.stringify(books, null, 2))
+const updateBooks = async (books) => {
+  await fs.writeFile(booksPath, JSON.stringify(books, null, 2))
+}
 
 const getAll = async () => {
-  const data = await fs.readFile(booksPath, 'utf-8')
+  const data = await fs.readFile(booksPath)
   return JSON.parse(data)
 }
 

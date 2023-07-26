@@ -4,15 +4,16 @@ const { nanoid } = require('nanoid')
 
 const booksPath = path.join(__dirname, 'books.json')
 
-const updateBooks = async (books) =>
-  fs.writeFile(booksPath, JSON.stringify(books, null, 2))
+const updateBooks = async (books) => {
+  await fs.writeFile(booksPath, JSON.stringify(books, null, 2))
+}
 
 const getAll = async () => {
   const data = await fs.readFile(booksPath)
   return JSON.parse(data)
 }
 
-const getOneById = async (id) => {
+const getById = async (id) => {
   const books = await getAll()
   const result = books.find((item) => item.id === id)
   return result || null
@@ -50,7 +51,7 @@ const removeById = async (id) => {
 
 module.exports = {
   getAll,
-  getOneById,
+  getById,
   add,
   updateById,
   removeById,

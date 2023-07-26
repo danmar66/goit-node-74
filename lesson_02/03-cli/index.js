@@ -1,38 +1,55 @@
 const books = require('./books')
-const { program } = require('commander')
 
 // const yargs = require('yargs')
 // const { hideBin } = require('yargs/helpers')
 
+const { program } = require('commander')
+
 const invokeAction = async ({ action, id, title, author }) => {
   switch (action) {
     case 'getAll':
-      const allBooks = await books.getAll()
-      console.log(allBooks)
+      const all = await books.getAll()
+      console.log(all)
       break
+
     case 'getById':
       const oneBook = await books.getById(id)
       console.log(oneBook)
       break
+
     case 'add':
       const newBook = await books.add({ title, author })
       console.log(newBook)
       break
+
     case 'updateById':
-      const updateBook = await books.updateById(id, { title, author })
-      console.log(updateBook)
+      const updatedBook = await books.updateById(id, { title, author })
+      console.log(updatedBook)
       break
+
     case 'removeById':
-      const removeBook = await books.removeById(id)
-      console.log(removeBook)
+      const removedBook = await books.removeById(id)
+      console.log(removedBook)
       break
 
     default:
+      console.log('Unknown action')
       break
   }
 }
 
-// Приклад без використання сторонніх пакетів
+// invokeAction({ action: 'getAll' })
+// invokeAction({ action: 'getById', id: 'u9kgwNWGi3uUUwh0b8V49+' })
+// invokeAction({ action: 'add', title: '1984', author: 'George Orwell' })
+// invokeAction({
+//   action: 'updateById',
+//   id: 'czlDWYlBU7Tb9kyxGAy4E1',
+//   title: '1980',
+//   author: 'George Orwell',
+// })
+// invokeAction({ action: 'removeById', id: 'czlDWYlBU7Tb9kyxGAy4E' })
+
+/// --- Self write
 
 // const actionIndex = process.argv.indexOf('--action')
 // if (actionIndex !== -1) {
@@ -40,15 +57,17 @@ const invokeAction = async ({ action, id, title, author }) => {
 //   invokeAction({ action })
 // }
 
-// Приклад з використанням пакету Yargs
+/// --- Yargs
 
 // const arr = hideBin(process.argv)
-// console.log(arr)
+// // console.log(arr)
 
 // const { argv } = yargs(arr)
-// console.log(argv)
+// // console.log(argv)
 
-// Приклад з використанням пакету Commander
+// invokeAction(argv)
+
+/// --- Commander
 
 program
   .option('-a, --action <type>')
@@ -56,7 +75,7 @@ program
   .option('-t, --title <type>')
   .option('-at, --author <type>')
 
-program.parse(process.argv)
+program.parse()
 
 const options = program.opts()
 
