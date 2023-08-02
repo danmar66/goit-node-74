@@ -11,7 +11,7 @@
     <script>
       const booksRequest = axios.get('http://localhost:3000/books')
       booksRequest
-        .then(({ data }) => console.log(data))
+        .then(({data}) => console.log(data))
         .catch((error) => console.log(error.message))
     </script>
   </body>

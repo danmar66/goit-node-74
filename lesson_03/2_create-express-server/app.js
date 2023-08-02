@@ -1,10 +1,6 @@
 const express = require('express')
 
-const books = require('./books')
-
 const app = express()
-
-app.set('json spaces', 2)
 
 app.get('/', (request, response) => {
     // console.log(request.method)
@@ -13,17 +9,10 @@ app.get('/', (request, response) => {
 })
 
 app.get('/contacts', (request, response) => {
+    console.log(request.method)
     response.send('Contacts page')
 })
 
-app.get('/books', (request, response) => {
-    // response.send(books)
-    // response.json(books)
-
-    return response.send(null)
-    // response.json(null)
-})
-
-app.listen(3001, () => {
+app.listen(3000, () => {
     console.log('Server started')
 })
