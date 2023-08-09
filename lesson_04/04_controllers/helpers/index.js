@@ -3,4 +3,5 @@ const controllerWrapper = require('./controllerWrapper')
 
 module.exports = {
   RequestError,
+  controllerWrapper
 }

@@ -1,6 +1,7 @@
 const fs = require('fs/promises')
 const path = require('path')
 const { nanoid } = require('nanoid')
+const { controllerWrapper } = require('../../helpers')
 
 const booksPath = path.join(__dirname, 'books.json')
 
@@ -49,7 +50,7 @@ const removeById = async (id) => {
 }
 
 module.exports = {
-  getAll,
+  getAll: controllerWrapper(getAll),
   getOneById,
   add,
   updateById,
