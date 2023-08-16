@@ -1,12 +1,9 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const logger = require('morgan')
 const cors = require('cors')
 require('dotenv').config()
 const booksRouter = require('./routes/api/books')
 const authRouter = require('./routes/api/auth')
-
-const { DB_HOST, PORT } = process.env
 
 const app = express()
 
@@ -24,26 +21,22 @@ app.use((req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  if (err.message.includes('E11000 duplicate key error')) {
-    res.status(409).json({ message: 'Already exist' })
+  const { name, code } = err
+
+  if (name === 'ValidationError') {
+    return res.status(400).json({
+      message: 'Incorrect data',
+    })
   }
 
-  if (err.message.includes('Cast to ObjectId failed')) {
-    res.status(400).json({ message: 'ID is not valid' })
-  }
-
-  if (err.name === 'ValidationError') {
-    res.status(400).json({ message: err.message })
+  if (err.message.includes('E11000 duplicate key')) {
+    return res
+      .status(409)
+      .json({ message: 'Object with this data already exist!' })
   }
 
   const { status = 500, message = 'Server error' } = err
   res.status(status).json({ message })
 })
 
-mongoose
-  .connect(DB_HOST)
-  .then(() => app.listen(PORT, () => console.log('Server Started!')))
-  .catch((err) => {
-    console.log(err)
-    process.exit(1)
-  })
+module.exports = app
