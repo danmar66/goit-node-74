@@ -1,14 +1,17 @@
 const jwt = require('jsonwebtoken')
+const User = require('../models/user')
 const { RequestError } = require('../helpers')
 const { JWT_SECRET } = process.env
-const User = require('../models/user')
 
-const auth = async (req, res, next) => {
-  const authHeader = req.headers.authorization || ''
-  const [type, token] = authHeader.split(' ')
+// console.log('JWT_SECRET = ', JWT_SECRET)
+
+const validateToken = async (req, res, next) => {
+  const authorizationHeader = req.headers.authorization || ''
+  //   console.log('Headers = ', authorizationHeader)
+  const [type, token] = authorizationHeader.split(' ')
 
   if (type !== 'Bearer') {
-    throw RequestError(401, 'Token type is not valid!')
+    throw RequestError(401, 'Token type is not valid')
   }
 
   if (!token) {
@@ -17,10 +20,7 @@ const auth = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, JWT_SECRET)
-    if (payload.type !== 'access') {
-      return res.status(401).json({ message: 'Invalid token' })
-    }
-    const user = await User.findById(payload.userId)
+    const user = await User.findById(payload.id)
     req.user = user
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
@@ -34,4 +34,4 @@ const auth = async (req, res, next) => {
   next()
 }
 
-module.exports = auth
+module.exports = validateToken

@@ -1,8 +1,8 @@
 const express = require('express')
-const schema = require('../../schemas/books')
-const { validateBody } = require('../../middlewares')
 const booksController = require('../../controllers/books')
 const controllerWrapper = require('../../helpers/controllerWrapper')
+const schema = require('../../schemas/books')
+const { validateBody } = require('../../middlewares')
 
 const router = express.Router()
 

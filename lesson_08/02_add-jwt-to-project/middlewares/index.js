@@ -1,7 +1,7 @@
 const validateBody = require('./validateBody')
-const auth = require('./auth')
+const validateToken = require('./validateToken')
 
 module.exports = {
   validateBody,
-  auth,
+  validateToken,
 }
