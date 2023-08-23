@@ -10,30 +10,41 @@ app.use(cors())
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '/tmp')
+    const dirPath = path.join(__dirname, 'tmp')
+    cb(null, dirPath)
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
-    cb(null, uniqueSuffix + '-' + file.originalname)
+    cb(null, Math.random() + file.originalname)
   },
 })
 
 const upload = multer({
-  storage: storage,
+  storage,
+  limits: { fileSize: 102400 },
 })
 
 app.post('/upload', upload.single('image'), async (req, res, next) => {
   console.log('file', req.file)
   const { filename } = req.file
   try {
-    const tmpPath = path.resolve(__dirname, 'tmp', filename)
-    const newPath = path.resolve(__dirname, 'public', filename)
-    await fs.rename(tmpPath, newPath)
-    return res.json({ ok: true })
+    const tmpPath = path.join(__dirname, 'tmp', filename)
+    const publicPath = path.join(__dirname, 'public', filename)
+    await fs.rename(tmpPath, publicPath)
+    return res.json({ message: 'File saved' })
   } catch (error) {
-    console.error('Error while moving file to ./public', error)
+    console.error('Error while moving file to /public', error)
     return res.status(500).json({ message: 'Internal server error' })
   }
 })
 
-app.listen(3000, () => console.log('Server started'))
+app.post('/upload/many', upload.array('image'), async (req, res, next) => {
+  try {
+    console.log('files', req.files)
+    return res.json({ message: 'ok' })
+  } catch (error) {
+    console.error('Error while moving file to /public', error.message)
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+})
+
+app.listen(3000, () => console.log('server listening on port 3000'))

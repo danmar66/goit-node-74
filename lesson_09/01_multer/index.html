@@ -9,24 +9,22 @@
   <body>
     <form id="form">
       <input type="file" name="file" />
-      <button type="submit">Send file</button>
+      <button type="submit">Send File</button>
     </form>
 
     <script>
-      const form = document.getElementById('form') // шукаємо елемент по id
+      const form = document.getElementById('form')
       form.addEventListener('submit', function (e) {
         console.log('post image to server')
-        // додаємо обробник подій, вказуємо тип події submit
-        e.preventDefault() // прериваємо поведінку за замовчуванням, щоб браузер не намагався сам відправити форму
+        e.preventDefault()
 
-        const formData = new FormData() // створюємо новий об'єект FormData - він вбудований в сам браузер
-        console.log(this.elements) // подивимось на об'єкт FormData, пере
-        formData.append('image', this.elements.file.files[0]) // додаємо наш файл
+        const formData = new FormData()
+        console.log(this.elements)
+        formData.append('image', this.elements.file.files[0])
 
-        const url = 'http://localhost:3000/upload' // вказуємо адресу, куди будемо відправляти запит
+        const url = 'http://localhost:3000/upload'
 
         fetch(url, {
-          // користуємось вбудованим методом fetch для відправки нашого запиту
           method: 'post',
           body: formData,
         }).catch((err) => console.log(err))
