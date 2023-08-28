@@ -1,9 +1,9 @@
 const validateBody = require('./validateBody')
-const auth = require('./auth')
-const upload = require('./upload')
+const validateToken = require('./validateToken')
+const upload = require('./uploadImage')
 
 module.exports = {
   validateBody,
-  auth,
+  validateToken,
   upload,
 }

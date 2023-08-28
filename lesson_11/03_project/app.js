@@ -1,8 +1,7 @@
-require('dotenv').config()
 const express = require('express')
 const logger = require('morgan')
 const cors = require('cors')
-
+require('dotenv').config()
 const booksRouter = require('./routes/api/books')
 const authRouter = require('./routes/api/auth')
 const usersRouter = require('./routes/api/users')
@@ -15,7 +14,6 @@ app.use(cors())
 app.use(logger(formatsLogger))
 app.use(express.json())
 
-app.use('/public', express.static('public'))
 app.use('/api/books', booksRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/users', usersRouter)
@@ -25,12 +23,18 @@ app.use((req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  if (err.message.includes('Cast to ObjectId failed')) {
-    res.status(400).json({ message: 'ID is not valid' })
-  }
+  const { name, code } = err
 
-  if (err.name === 'ValidationError') {
-    res.status(400).json({ message: err.message })
+  // if (name === 'ValidationError') {
+  //   return res.status(400).json({
+  //     message: 'Incorrect data',
+  //   })
+  // }
+
+  if (err.message.includes('E11000 duplicate key')) {
+    return res
+      .status(409)
+      .json({ message: 'Object with this data already exist!' })
   }
 
   const { status = 500, message = 'Server error' } = err

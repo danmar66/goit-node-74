@@ -1,17 +1,12 @@
 const Book = require('../../models/book')
-const path = require('path')
 const fs = require('fs/promises')
-const { RequestError } = require('../../helpers')
+const path = require('path')
 
 const uploadImage = async (req, res) => {
+  const { id } = req.params
   const { filename } = req.file
-
-  if (!filename) {
-    throw RequestError(400, 'File is require!')
-  }
-
-  const tmpPath = path.resolve(__dirname, '../../tmp', filename)
-  const publicPath = path.resolve(__dirname, '../../public', filename)
+  const tmpPath = path.join(__dirname, '../../tmp', filename)
+  const publicPath = path.join(__dirname, '../../public', filename)
 
   try {
     await fs.rename(tmpPath, publicPath)
@@ -20,14 +15,14 @@ const uploadImage = async (req, res) => {
     throw error
   }
 
-  const bookId = req.params.id
   const book = await Book.findByIdAndUpdate(
-    bookId,
-    { image: `public/${filename}` },
+    id,
+    {
+      image: publicPath,
+    },
     { new: true }
   )
-
-  res.json({ image: book.image })
+  return res.json({ image: book.image })
 }
 
 module.exports = uploadImage

@@ -1,11 +1,7 @@
 const express = require('express')
-
 const booksController = require('../../controllers/books')
-
 const controllerWrapper = require('../../helpers/controllerWrapper')
-
 const schema = require('../../schemas/books')
-
 const { validateBody, upload } = require('../../middlewares')
 
 const router = express.Router()
@@ -20,16 +16,16 @@ router.post(
   controllerWrapper(booksController.add)
 )
 
-router.patch(
-  '/:id/image',
-  upload.single('image'),
-  controllerWrapper(booksController.uploadImage)
-)
-
 router.put(
   '/:id',
   validateBody(schema.bookSchema),
   controllerWrapper(booksController.updateById)
+)
+
+router.patch(
+  '/:id/image',
+  upload.single('image'),
+  controllerWrapper(booksController.uploadImage)
 )
 
 router.delete('/:id', controllerWrapper(booksController.removeById))

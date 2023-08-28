@@ -2,9 +2,9 @@ const User = require('../../models/user')
 
 const addBook = async (req, res) => {
   const { user } = req
-  const { id: bookID } = req.body
+  const { id: bookId } = req.body
 
-  user.books.push({ _id: bookID })
+  user.books.push(bookId)
 
   await User.findByIdAndUpdate(user._id, user)
 

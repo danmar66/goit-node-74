@@ -1,9 +1,11 @@
 const RequestError = require('./RequestError')
 const controllerWrapper = require('./controllerWrapper')
-const sendEmail = require('./sendEmail')
+const authHelper = require('./auth')
+const sendMail = require('./sendMail')
 
 module.exports = {
   RequestError,
   controllerWrapper,
-  sendEmail,
+  authHelper,
+  sendMail,
 }

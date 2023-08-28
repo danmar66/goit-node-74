@@ -1,21 +1,24 @@
 const express = require('express')
-const controllerWrapper = require('../../helpers/controllerWrapper')
-const controller = require('../../controllers/users')
-const { auth } = require('../../middlewares')
-
 const router = express.Router()
+const userController = require('../../controllers/users')
+const { validateToken } = require('../../middlewares')
+const { controllerWrapper } = require('../../helpers')
 
-router.post('', controllerWrapper(auth), controllerWrapper(controller.addBook))
-router.get(
-  '/books',
-  controllerWrapper(auth),
-  controllerWrapper(controller.getBooks)
-)
 router.get(
   '/info',
-  controllerWrapper(auth),
-  controllerWrapper(controller.getInfo)
+  controllerWrapper(validateToken),
+  controllerWrapper(userController.getInfo)
 )
-router.get('/verify/:token', controllerWrapper(controller.verifyToken))
+router.get(
+  '/books',
+  controllerWrapper(validateToken),
+  controllerWrapper(userController.getBooks)
+)
+
+router.post(
+  '/books',
+  controllerWrapper(validateToken),
+  controllerWrapper(userController.addBook)
+)
 
 module.exports = router

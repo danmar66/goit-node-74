@@ -1,19 +1,19 @@
 const { Schema, model, Types } = require('mongoose')
 
-const schema = new Schema(
+const userSchema = new Schema(
   {
     email: {
       type: String,
       unique: true,
-      match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'user email is not valid'],
+      match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
     },
     password: {
       type: String,
-      minLength: [6, 'password should be at least 6 characters long'],
+      minLength: [6, 'Password should be at least 6 characters!'],
     },
     books: {
       type: [Types.ObjectId],
-      ref: 'book',
+      rel: 'book',
     },
     verified: {
       type: Boolean,
@@ -23,12 +23,9 @@ const schema = new Schema(
       type: String,
     },
   },
-  {
-    timestamps: true,
-    versionKey: false,
-  }
+  { versionKey: false, timestamps: true }
 )
 
-const User = model('user', schema)
+const User = model('user', userSchema)
 
 module.exports = User

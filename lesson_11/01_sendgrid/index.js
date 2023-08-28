@@ -1,24 +1,24 @@
 const sendgrid = require('@sendgrid/mail')
 require('dotenv').config()
 
+const { SENDGRID_API_KEY } = process.env
+
 async function main() {
   try {
-    const { SENDGRID_API_KEY } = process.env
-
     sendgrid.setApiKey(SENDGRID_API_KEY)
 
     const email = {
-      to: 'zerogodmask@gmail.com',
-      from: 'marchenkodanil97@gmail.com', // Use the email address or domain you verified above
-      subject: 'Sending with Twilio SendGrid is Fun',
-      text: 'and easy to do anywhere, even with Node.js',
-      html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+      from: 'marchenkodanil97@gmail.com',
+      to: 'marchenkodaniel97@gmail.com',
+      subject: 'Sendgrid test',
+      html: '<h1>Hello from Sendgrid</h1>',
+      text: 'Hello from Sendgrid',
     }
 
     const response = await sendgrid.send(email)
-    console.log('response = ', response)
+    console.log('Response = ', response)
   } catch (error) {
-    console.error('Application error', error)
+    console.error('Application error: ', error)
   }
 }
 

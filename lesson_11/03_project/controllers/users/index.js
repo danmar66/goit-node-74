@@ -1,6 +1,9 @@
-const addBook = require('./addBook')
 const getBooks = require('./getBooks')
 const getInfo = require('./getInfo')
-const verifyToken = require('./verifyToken')
+const addBook = require('./addBook')
 
-module.exports = { addBook, getBooks, getInfo, verifyToken }
+module.exports = {
+  getBooks,
+  getInfo,
+  addBook,
+}
