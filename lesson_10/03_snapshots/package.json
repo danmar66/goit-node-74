@@ -1,8 +1,8 @@
 {
-  "name": "02_simple-jest",
+  "name": "03_snapshots",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "greet.test.js",
   "scripts": {
     "test": "jest",
     "test:dev": "jest --watch"
@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/jest": "^29.5.1",
-    "jest": "^29.5.0"
+    "jest": "^29.6.3"
   }
 }

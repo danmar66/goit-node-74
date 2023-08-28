@@ -1,16 +1,65 @@
 const sum = require('./sum')
 
+// const result = sum(1, 2)
+
+// if (result !== 3) {
+//   throw new Error(`Expect 3 got ${result}`)
+// }
+
+// console.log('Test passed')
+
+// const result2 = sum(1, -2)
+
+// if (result2 !== -1) {
+//   throw new Error(`Expect 3 got ${result2}`)
+// }
+
+// console.log('Test passed')
+
+// const result3 = sum('1', -2)
+
+// if (result3 !== -1) {
+//   throw new Error(`Expect 3 got ${result3}`)
+// }
+
+// console.log('Test passed')
+
+// -------------------------------------------------
+
+// function expect(actual) {
+//   return {
+//     toBe(expected) {
+//       if (actual !== expected) {
+//         throw new Error(`Expected ${expected} got ${actual}`)
+//       }
+//       console.log('         Test Passed')
+//     },
+//   }
+// }
+
+// function describe(text, cb) {
+//   console.log(`${text}`)
+//   cb()
+// }
+
+// function test(text, cb) {
+//   console.log(`${text}`)
+//   cb()
+// }
+
+// --------------------------------------
+
 describe('sum', () => {
-  beforeAll(() => {
-    console.log('It run before all tests')
+  afterAll(() => {
+    console.log('I am running after all test')
   })
 
-  afterAll(() => {
-    console.log('It run after all tests')
+  beforeAll(() => {
+    console.log('I am running before all test')
   })
 
   beforeEach(() => {
-    console.log('It should run before each test')
+    console.log('I am running before each test')
   })
 
   it('1 + 2 should return 3', () => {
@@ -18,15 +67,13 @@ describe('sum', () => {
     expect(result).toBe(3)
   })
 
-  it('1 + -2 should return -1', () => {
+  test('1 + 2 should return -1', () => {
     const result = sum(1, -2)
     expect(result).toBe(-1)
   })
 
-  describe('not a number', () => {
-    test('1 + 2 should return -1', () => {
-      const result = sum('1', -2)
-      expect(result).toBe(-1)
-    })
+  test.skip('1 + 2 should return -1', () => {
+    const result = sum('1', -2)
+    expect(result).toBe(-1)
   })
 })

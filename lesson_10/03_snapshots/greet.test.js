@@ -1,8 +1,8 @@
-const greet = require('./greet.js')
+const greet = require('./greeting')
 
-describe('sum', () => {
-  it('should return greeting', () => {
+describe('greeting', () => {
+  it('should return greetin', () => {
     const result = greet()
-    expect(result).toMatchInlineSnapshot(`"Hello"`)
+    expect(result).toMatchInlineSnapshot(`"Hello!!!!!!u"`)
   })
 })

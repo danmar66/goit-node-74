@@ -10,7 +10,7 @@ jest.mock('./generateNumber', () => {
 
 describe('lottery', () => {
   beforeAll(() => {
-    mockGenerateNumber.mockImplementation(() => 2)
+    mockGenerateNumber.mockImplementation(() => 3)
   })
 
   it('should won when 2', () => {
@@ -18,8 +18,8 @@ describe('lottery', () => {
     expect(result).toBe('You won!')
   })
 
-  it.skip('should lose', () => {
-    const result = lottery(1)
+  it('should lose', () => {
+    const result = lottery(3)
     expect(result).toBe('You lose')
   })
 })
